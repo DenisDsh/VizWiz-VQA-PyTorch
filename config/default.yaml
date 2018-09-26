@@ -1,0 +1,46 @@
+logs:
+    dir_logs: logs/vizwiz/
+annotations:
+    dir: ../data_vizwiz/Annotations
+    top_ans: 3000
+    max_length: 26
+    min_count_word: 0
+    path_vocabs: ./prepro_data/vocabs.json
+images:
+    dir: ../data_vizwiz/Images
+    arch: ResNet152
+    mode: att
+    img_size: 448
+    preprocess_batch_size: 4
+    preprocess_data_workers: 4
+    path_features: ./prepro_data/resnet14x14.h5
+model:
+# Could be added new architectures and hyper-parameters like activations etc
+    pretrained_model:  #./logs/... # leave empty if no pretrained model is available
+    seq2vec:
+        dropout: 0.25
+        emb_size: 300
+    pooling:
+        dim_v: 2048
+        dim_q: 1024
+        dim_h: 1024
+        dropout_v: 0.5
+        dropout_q: 0.5
+    classifier:
+        dropout: 0.5
+    attention:
+        glimpses: 2
+        mid_features: 512
+        dropout: 0.5
+training:
+    train_split: train
+    lr: 0.001
+    batch_size: 128
+    epochs: 50
+    data_workers: 4
+
+prediction:
+    model_path: ./logs/vizwiz/2018-09-20_13:04:05/final_log.pth
+    split: test
+    submission_file: ./predictions/default_pred.json
+
