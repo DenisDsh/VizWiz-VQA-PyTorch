@@ -40,6 +40,11 @@ pip install -r requirements.txt
 wget https://ivc.ischool.utexas.edu/VizWiz/data/VizWiz_data_ver1.tar.gz
 tar -xzf VizWiz_data_ver1.tar.gz
 ```
+After unpacking the dataset, the Image folder will contain files with prefix `._VizWiz`.
+Those files should be removed before extracting the image features:
+```
+rm ._*
+```
 
 - Set the paths to the downloaded data in the yaml configuration file `config/default.yaml`.
 
