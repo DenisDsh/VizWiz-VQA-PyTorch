@@ -100,11 +100,17 @@ def main():
     # Data loader and dataset
     input_loader = vqa_dataset.get_loader(config, split=config['prediction']['split'])
 
-    model = nn.DataParallel(models.Model(input_loader.dataset.num_tokens)).cuda()
-
     # Load model weights
     print("Loading Model from %s" % config['prediction']['model_path'])
     log = torch.load(config['prediction']['model_path'])
+
+    # Num tokens seen during training
+    num_tokens = len(log['vocabs']['question']) + 1
+    # Use the same configuration used during training
+    train_config = log['config']
+
+    model = nn.DataParallel(models.Model(train_config, num_tokens)).cuda()
+
     dict_weights = log['weights']
     model.load_state_dict(dict_weights)
 
